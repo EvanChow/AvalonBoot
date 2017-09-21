@@ -18,7 +18,7 @@ public class WebConfig implements EmbeddedServletContainerCustomizer  {
 
     public void customize(ConfigurableEmbeddedServletContainer container) {
         container.setContextPath("/AvalonBoot");//修改根目录路径  
-        container.setPort(8081);//启动的端口号
+        container.setPort(8080);//启动的端口号
         container.setSessionTimeout(30);//超时设置
         container.setDocumentRoot(new File(""));
         
