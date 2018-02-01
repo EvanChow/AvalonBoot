@@ -3,7 +3,7 @@
 <mapper namespace="UserMapper">
  
   <select id="findUserInfo" resultType="com.avalon.entity.sys.User" parameterType="com.avalon.entity.sys.User">
-    select t.* from sys_user t where t.UID=#{uid};
+    select t.* from sys_user t where t.UID=#{uid}
   </select>
  
 </mapper>

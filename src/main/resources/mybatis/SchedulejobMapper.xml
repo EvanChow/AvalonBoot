@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="SchedulejobMapper">
+
+	<resultMap id="SchedulejobMap" type="com.avalon.entity.quartz.ScheduleJob">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="aliasName" column="aliasName"/>
+        <result property="group" column="group"/>
+        <result property="jobTrigger" column="jobTrigger"/>
+        <result property="status" column="status"/>
+        <result property="cronExpression" column="cronExpression"/>
+        <result property="isSync" column="isSync"/>
+        <result property="description" column="description"/>
+        <result property="create" column="create"/>
+        <result property="modify" column="modify"/>
+        <result property="classname" column="classname"/>
+        <result property="classnamesync" column="classnamesync"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Schedulejob_columns">
+		t.id,t.name,t.aliasName,t.group,t.jobTrigger,t.status,t.cronExpression,t.isSync,t.description,t.create,t.modify,t.classname,t.classnamesync
+	</sql>
+	
+	<sql id="Schedulejob_SQL_WHERE">
+		1=1
+				     <if test="id != null and  id.length()!=0 " >
+		             AND t.id = #{id}   
+	                 </if>
+		         
+				     <if test="name != null and  name.length()!=0 " >
+		             AND t.name = #{name}   
+	                 </if>
+		         
+				     <if test="aliasName != null and  aliasName.length()!=0 " >
+		             AND t.aliasName = #{aliasName}   
+	                 </if>
+		         
+				     <if test="group != null and  group.length()!=0 " >
+		             AND t.group = #{group}   
+	                 </if>
+		         
+				     <if test="jobTrigger != null and  jobTrigger.length()!=0 " >
+		             AND t.jobTrigger = #{jobTrigger}   
+	                 </if>
+		         
+				     <if test="status != null and  status.length()!=0 " >
+		             AND t.status = #{status}   
+	                 </if>
+		         
+				     <if test="cronExpression != null and  cronExpression.length()!=0 " >
+		             AND t.cronExpression = #{cronExpression}   
+	                 </if>
+		         
+				     <if test="isSync != null and  isSync.length()!=0 " >
+		             AND t.isSync = #{isSync}   
+	                 </if>
+		         
+				     <if test="description != null and  description.length()!=0 " >
+		             AND t.description = #{description}   
+	                 </if>
+		         
+				     <if test="create != null" >
+		             AND t.create = #{create}   
+	                 </if>
+		         
+				     <if test="modify != null" >
+		             AND t.modify = #{modify}   
+	                 </if>
+		         
+				     <if test="classname != null and  classname.length()!=0 " >
+		             AND t.classname = #{classname}   
+	                 </if>
+		         
+				     <if test="classnamesync != null and  classnamesync.length()!=0 " >
+		             AND t.classnamesync = #{classnamesync}   
+	                 </if>
+		         
+	</sql>
+	
+	<sql id="Schedulejob_SQL_PAGING">
+		 <if test="sort != null  and sort != ''" >order by  #{sort}</if>
+	      <if test="order != null  and order != ''" >#{order}</if>
+		  LIMIT #{limit},#{offset}
+     </sql>
+     
+     <!-- 条件查询 -->
+     <select id="select"  parameterType="com.avalon.entity.quartz.ScheduleJob" resultMap="SchedulejobMap">
+	   select <include refid="Schedulejob_columns"/>
+	    from schedulejob t
+	   <where>
+		    <include refid="Schedulejob_SQL_WHERE"/>
+	   </where>
+	 </select>
+	 
+	 <!-- 分页查询 -->
+	 <select id="DataPagination" parameterType="com.avalon.entity.quartz.ScheduleJob" resultMap="SchedulejobMap">
+	    select t.* from schedulejob t
+		   <where>
+		    <include refid="Schedulejob_SQL_WHERE"/>
+		   </where>
+		   <include refid="Schedulejob_SQL_PAGING"/>
+	  </select>
+	  
+	  <select id="DataPaginationCount" parameterType="com.avalon.entity.quartz.ScheduleJob" resultType="java.lang.Integer">
+	     select count(1) from schedulejob t
+	     <where>
+		    <include refid="Schedulejob_SQL_WHERE"/>
+		 </where>
+	  </select>
+	 
+	 <!-- 批量删除-->
+	 <delete id="delete" parameterType="com.avalon.entity.quartz.ScheduleJob">
+	   delete  from schedulejob  where
+        id in (${id}) 
+  	 </delete>
+  	 
+
+	<!-- useGeneratedKeys="true"(主键自增)  keyProperty="xxx" for sqlserver and mysql -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.avalon.entity.quartz.ScheduleJob">
+        INSERT INTO schedulejob (
+         id, name, aliasName, group, jobTrigger, status, cronExpression, isSync, description, create, modify, classname, classnamesync
+        ) VALUES (
+         #{id}, #{name}, #{aliasName}, #{group}, #{jobTrigger}, #{status}, #{cronExpression}, #{isSync}, #{description}, #{create}, #{modify}, #{classname}, #{classnamesync}        
+        )
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.avalon.entity.quartz.ScheduleJob">
+        INSERT INTO schedulejob
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+           
+				<if test="id != null and id.length()>0 " >
+	        id,
+	        </if>
+
+           
+				<if test="name != null and name.length()>0 " >
+	        name,
+	        </if>
+
+           
+				<if test="aliasName != null and aliasName.length()>0 " >
+	        aliasName,
+	        </if>
+
+           
+				<if test="group != null and group.length()>0 " >
+	        group,
+	        </if>
+
+           
+				<if test="jobTrigger != null and jobTrigger.length()>0 " >
+	        jobTrigger,
+	        </if>
+
+           
+				<if test="status != null and status.length()>0 " >
+	        status,
+	        </if>
+
+           
+				<if test="cronExpression != null and cronExpression.length()>0 " >
+	        cronExpression,
+	        </if>
+
+           
+				<if test="isSync != null and isSync.length()>0 " >
+	        isSync,
+	        </if>
+
+           
+				<if test="description != null and description.length()>0 " >
+	        description,
+	        </if>
+
+           
+           <if test="create != null " >
+	        create,
+	        </if>
+
+           
+           <if test="modify != null " >
+	        modify,
+	        </if>
+
+           
+				<if test="classname != null and classname.length()>0 " >
+	        classname,
+	        </if>
+
+           
+				<if test="classnamesync != null and classnamesync.length()>0 " >
+	        classnamesync
+	        </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+          
+				<if test="id != null and id.length()>0 " >
+		        #{id},
+		      </if>
+	          
+          
+				<if test="name != null and name.length()>0 " >
+		        #{name},
+		      </if>
+	          
+          
+				<if test="aliasName != null and aliasName.length()>0 " >
+		        #{aliasName},
+		      </if>
+	          
+          
+				<if test="group != null and group.length()>0 " >
+		        #{group},
+		      </if>
+	          
+          
+				<if test="jobTrigger != null and jobTrigger.length()>0 " >
+		        #{jobTrigger},
+		      </if>
+	          
+          
+				<if test="status != null and status.length()>0 " >
+		        #{status},
+		      </if>
+	          
+          
+				<if test="cronExpression != null and cronExpression.length()>0 " >
+		        #{cronExpression},
+		      </if>
+	          
+          
+				<if test="isSync != null and isSync.length()>0 " >
+		        #{isSync},
+		      </if>
+	          
+          
+				<if test="description != null and description.length()>0 " >
+		        #{description},
+		      </if>
+	          
+          
+         		 <if test="create != null" >
+		        #{create},
+		        </if>
+	          
+          
+         		 <if test="modify != null" >
+		        #{modify},
+		        </if>
+	          
+          
+				<if test="classname != null and classname.length()>0 " >
+		        #{classname},
+		      </if>
+	          
+          
+				<if test="classnamesync != null and classnamesync.length()>0 " >
+		        #{classnamesync}
+		      </if>
+	          
+        </trim>
+	</insert>
+	
+	
+	<!-- 批量新增 -->
+  <insert id="insertbatch" parameterType="java.util.List" >
+    insert into schedulejob
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test=" id != null and id.length()>0 " >
+		        id,
+		        </if>
+				<if test=" name != null and name.length()>0 " >
+		        name,
+		        </if>
+				<if test=" aliasName != null and aliasName.length()>0 " >
+		        aliasName,
+		        </if>
+				<if test=" group != null and group.length()>0 " >
+		        group,
+		        </if>
+				<if test=" jobTrigger != null and jobTrigger.length()>0 " >
+		        jobTrigger,
+		        </if>
+				<if test=" status != null and status.length()>0 " >
+		        status,
+		        </if>
+				<if test=" cronExpression != null and cronExpression.length()>0 " >
+		        cronExpression,
+		        </if>
+				<if test=" isSync != null and isSync.length()>0 " >
+		        isSync,
+		        </if>
+				<if test=" description != null and description.length()>0 " >
+		        description,
+		        </if>
+            	<if test=" create != null" >
+		        create,
+		        </if>
+            	<if test=" modify != null" >
+		        modify,
+		        </if>
+				<if test=" classname != null and classname.length()>0 " >
+		        classname,
+		        </if>
+				<if test=" classnamesync != null and classnamesync.length()>0 " >
+		        classnamesync
+		        </if>
+    </trim>
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+       <trim prefix="values (" suffix=")" suffixOverrides="," >
+          
+		     	<if test=" item.id != null and item.id.length()>0 " >
+		        #{item.id},
+		       </if>
+          
+          
+		     	<if test=" item.name != null and item.name.length()>0 " >
+		        #{item.name},
+		       </if>
+          
+          
+		     	<if test=" item.aliasName != null and item.aliasName.length()>0 " >
+		        #{item.aliasName},
+		       </if>
+          
+          
+		     	<if test=" item.group != null and item.group.length()>0 " >
+		        #{item.group},
+		       </if>
+          
+          
+		     	<if test=" item.jobTrigger != null and item.jobTrigger.length()>0 " >
+		        #{item.jobTrigger},
+		       </if>
+          
+          
+		     	<if test=" item.status != null and item.status.length()>0 " >
+		        #{item.status},
+		       </if>
+          
+          
+		     	<if test=" item.cronExpression != null and item.cronExpression.length()>0 " >
+		        #{item.cronExpression},
+		       </if>
+          
+          
+		     	<if test=" item.isSync != null and item.isSync.length()>0 " >
+		        #{item.isSync},
+		       </if>
+          
+          
+		     	<if test=" item.description != null and item.description.length()>0 " >
+		        #{item.description},
+		       </if>
+          
+          
+		          <if test=" item.create != null " >
+			        #{item.create},
+			      </if> 
+          
+          
+		          <if test=" item.modify != null " >
+			        #{item.modify},
+			      </if> 
+          
+          
+		     	<if test=" item.classname != null and item.classname.length()>0 " >
+		        #{item.classname},
+		       </if>
+          
+          
+		     	<if test=" item.classnamesync != null and item.classnamesync.length()>0 " >
+		        #{item.classnamesync}
+		       </if>
+          
+        </trim>
+    </foreach>
+  </insert>
+    
+	<update id="updateSelectiveById" parameterType="com.avalon.entity.quartz.ScheduleJob">
+        UPDATE schedulejob 
+        <set >
+				<if test="name != null and name.length()>0 " >
+		              name = #{name} ,  
+	             </if>
+		         
+				<if test="aliasName != null and aliasName.length()>0 " >
+		              aliasName = #{aliasName} ,  
+	             </if>
+		         
+				<if test="group != null and group.length()>0 " >
+		              group = #{group} ,  
+	             </if>
+		         
+				<if test="jobTrigger != null and jobTrigger.length()>0 " >
+		              jobTrigger = #{jobTrigger} ,  
+	             </if>
+		         
+				<if test="status != null and status.length()>0 " >
+		              status = #{status} ,  
+	             </if>
+		         
+				<if test="cronExpression != null and cronExpression.length()>0 " >
+		              cronExpression = #{cronExpression} ,  
+	             </if>
+		         
+				<if test="isSync != null and isSync.length()>0 " >
+		              isSync = #{isSync} ,  
+	             </if>
+		         
+				<if test="description != null and description.length()>0 " >
+		              description = #{description} ,  
+	             </if>
+		         
+	             <if test="create != null " >
+		              create = #{create} ,  
+	             </if> 
+		         
+	             <if test="modify != null " >
+		              modify = #{modify} ,  
+	             </if> 
+		         
+				<if test="classname != null and classname.length()>0 " >
+		              classname = #{classname} ,  
+	             </if>
+		         
+				<if test="classnamesync != null and classnamesync.length()>0 " >
+		              classnamesync = #{classnamesync}   
+	             </if>
+		         
+	    </set>
+        WHERE id = #{id}  	        
+	</update>
+	
+	
+	<update id="updatebatch" parameterType="java.util.List">
+        update schedulejob 
+        <foreach collection="list" item="item" index="index" separator="," >
+           <set >
+				<if test="item.name != null and item.name.length()>0 " >
+					 #{item.name} = #{item.name} ,  
+				</if>
+				<if test="item.aliasName != null and item.aliasName.length()>0 " >
+					 #{item.aliasName} = #{item.aliasName} ,  
+				</if>
+				<if test="item.group != null and item.group.length()>0 " >
+					 #{item.group} = #{item.group} ,  
+				</if>
+				<if test="item.jobTrigger != null and item.jobTrigger.length()>0 " >
+					 #{item.jobTrigger} = #{item.jobTrigger} ,  
+				</if>
+				<if test="item.status != null and item.status.length()>0 " >
+					 #{item.status} = #{item.status} ,  
+				</if>
+				<if test="item.cronExpression != null and item.cronExpression.length()>0 " >
+					 #{item.cronExpression} = #{item.cronExpression} ,  
+				</if>
+				<if test="item.isSync != null and item.isSync.length()>0 " >
+					 #{item.isSync} = #{item.isSync} ,  
+				</if>
+				<if test="item.description != null and item.description.length()>0 " >
+					 #{item.description} = #{item.description} ,  
+				</if>
+	            <if test="item.create != null " >
+					 #{item.create} = #{item.create} ,  
+				 </if>
+	            <if test="item.modify != null " >
+					 #{item.modify} = #{item.modify} ,  
+				 </if>
+				<if test="item.classname != null and item.classname.length()>0 " >
+					 #{item.classname} = #{item.classname} ,  
+				</if>
+				<if test="item.classnamesync != null and item.classnamesync.length()>0 " >
+					 #{item.classnamesync} = #{item.classnamesync}   
+				</if>
+	         WHERE id = #{id}  	
+	       </set>
+       </foreach>
+    	
+    </update>
+    
+    
+</mapper>
+

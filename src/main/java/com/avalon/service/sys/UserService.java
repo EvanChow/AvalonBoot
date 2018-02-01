@@ -1,5 +1,7 @@
 package com.avalon.service.sys;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,14 @@ public class UserService {
     public User getUserInfo(String uid){
         User entity=new User();
         entity.setUid(uid);
-        System.out.println(uid);
         try {
-            return myBatisDao.getAllByEntity("UserMapper.findUserInfo", entity).get(0);
+            List<User> users=myBatisDao.getAllByEntity("UserMapper.findUserInfo", entity);
+            if(users.size()>0){
+                return users.get(0);
+            }else{
+                return new User();
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

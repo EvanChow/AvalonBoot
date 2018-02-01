@@ -1,4 +1,4 @@
-#Mon Sep 18 14:26:03 CST 2017
+#Thu Dec 21 15:44:27 CST 2017
 eclipse.preferences.version=1
-validator.Checked=src/main/resources/static/swagger/lib/marked.js,src/main/resources/static/swagger/swagger-ui.js
+validator.Checked=src/main/resources/static/swagger/lib/marked.js,src/main/java/com/avalon/controller/BaseController.java,src/main/resources/static/swagger/swagger-ui.js
 validator.Unchecked=

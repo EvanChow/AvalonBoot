@@ -782,7 +782,7 @@ public class MyRedisDao {
     /**
      * 
      * @方法名: lRange
-     * @功能描述: 分页获取列表
+     * @功能描述: 分页获取列表[begin,end)
      * @参数：@param
      * @返回：@return
      * @创建人: Evan

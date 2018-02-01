@@ -1,10 +1,52 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head> 
-    <title>AvalonBoot</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <title>AvalonBoot</title>
+  <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}" />
 </head>
 <body>
-    <p th:text="'Hello! Nice To ' + ${name} + '!'" />
+ 
+ces1
+<table id="dataTable" lay-filter="test"></table>
+
+ 
+<script th:src="@{/static/layui/layui.js}"></script>
+<script th:src="@{/static/layui/jquery-2.1.4.min.js}"></script>
+<script>
+layui.use(['layer', 'laydate','table'], function(){
+  var laydate = layui.laydate;
+  var layer = layui.layer;
+  var table = layui.table;
+ //第一个实例
+  table.render({
+    elem: '#dataTable'
+    ,height: 315
+    ,url: 'task/list.do' //数据接口
+    ,page: true //开启分页
+    ,cols: [[ //表头
+      {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+      ,{field: 'name', title: '任务名称', width:80}
+      ,{field: 'aliasName', title: '任务别名', width:80, sort: true}
+      ,{field: 'group', title: '任务分组', width:80} 
+      ,{field: 'jobTrigger', title: '触发器', width: 177}
+      ,{field: 'status', title: '任务状态', width: 80, sort: true}
+      ,{field: 'cronExpression', title: '任务运行时间表达式', width: 80, sort: true}
+      ,{field: 'isSync', title: '是否异步', width: 80}
+      ,{field: 'description', title: '任务描述', width: 135, sort: true}
+      ,{field: 'create', title: '创建时间', width: 135, sort: true}
+      ,{field: 'modify', title: '修改时间', width: 135, sort: true}
+    ]]
+  });
+  
+  
+});
+
+
+
+
+</script> 
 </body>
 </html>
+

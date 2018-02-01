@@ -50,11 +50,6 @@ public class Application {
         return new DataSourceTransactionManager(dataSource());
     }
     
-    
-
-    
-    
-    
     public static void main(String[] args) {
         System.out.println("Start。。。。。。。。。。。。。。。。。。。。");
         SpringApplication.run(Application.class, args);

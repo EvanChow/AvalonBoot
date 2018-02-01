@@ -13,7 +13,10 @@ import org.springframework.boot.context.embedded.SslStoreProvider;
 public class SSL {
         
     public static Ssl AvalonSsl(){
-        return null;
+        
+        Ssl ssl=new Ssl();
+        
+        return ssl;
     }
     
     public static SslStoreProvider AvalonSslStoreProvider(){

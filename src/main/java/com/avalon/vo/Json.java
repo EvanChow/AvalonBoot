@@ -15,6 +15,11 @@ public class Json {
         this.obj=obj;
     }
     
+    public Json(boolean success,String msg){
+        this.success=success;
+        this.msg=msg;
+    }
+    
     public boolean isSuccess() {
         return success;
     }
